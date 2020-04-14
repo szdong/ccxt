@@ -1110,10 +1110,12 @@ class binance(Exchange):
         if uppercaseType == 'LIMIT':
             priceIsRequired = True
             timeInForceIsRequired = True
-        elif (uppercaseType == 'STOP_LOSS') or (uppercaseType == 'TAKE_PROFIT'):
+        elif (uppercaseType == 'STOP') or (uppercaseType == 'TAKE_PROFIT'):
             stopPriceIsRequired = True
             if market['future']:
                 priceIsRequired = True
+        elif (uppercaseType == 'STOP_MARKET') or (uppercaseType == 'TAKE_PROFIT_MARKET'):
+            stopPriceIsRequired = True
         elif (uppercaseType == 'STOP_LOSS_LIMIT') or (uppercaseType == 'TAKE_PROFIT_LIMIT'):
             stopPriceIsRequired = True
             priceIsRequired = True
@@ -1123,6 +1125,9 @@ class binance(Exchange):
         elif uppercaseType == 'STOP':
             stopPriceIsRequired = True
             priceIsRequired = True
+        # elif uppercaseType == 'TAKE_PROFIT':
+        #     stopPriceIsRequired = True
+        #     priceIsRequired = True
         if priceIsRequired:
             if price is None:
                 raise InvalidOrder(self.id + ' createOrder method requires a price argument for a ' + type + ' order')
